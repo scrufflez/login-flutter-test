@@ -6,62 +6,35 @@ void main() {
   runApp(const LoginApp());
 }
 
-// === Asgard Design System ===
+// ─── Asgard 1.4 Color Palette ───────────────────────────────────────────────
 
 class AsgardColors {
-  // Light mode
-  static const Color backgroundLight = Color(0xFFF8FAFC);
-  static const Color surfaceLight = Color(0xFFFFFFFF);
-  static const Color primaryLight = Color(0xFF1E40AF);
-  static const Color primaryHoverLight = Color(0xFF1E3A8A);
-  static const Color primaryAccentLight = Color(0xFF3B82F6);
-  static const Color successLight = Color(0xFF10B981);
-  static const Color dangerLight = Color(0xFFEF4444);
-  static const Color borderLight = Color(0xFFE2E8F0);
-  static const Color textPrimaryLight = Color(0xFF0F172A);
-  static const Color textSecondaryLight = Color(0xFF64748B);
+  static const Color backgroundDeep = Color(0xFF0F1113);
+  static const Color background = Color(0xFF151819);
+  static const Color topBar = Color(0xFF0B0D0E);
+  static const Color surface = Color(0xFF1A1F23);
+  static const Color surfaceRaised = Color(0xFF20262B);
+  static const Color border = Color(0xFF2A3036);
+  static const Color borderStrong = Color(0xFF374151);
 
-  // Dark mode
-  static const Color backgroundDark = Color(0xFF0F172A);
-  static const Color surfaceDark = Color(0xFF1E2937);
-  static const Color primaryDark = Color(0xFF3B82F6);
-  static const Color primaryHoverDark = Color(0xFF2563EB);
-  static const Color successDark = Color(0xFF10B981);
-  static const Color dangerDark = Color(0xFFEF4444);
-  static const Color borderDark = Color(0xFF334155);
-  static const Color textPrimaryDark = Color(0xFFF1F5F9);
-  static const Color textSecondaryDark = Color(0xFF94A3B8);
+  static const Color primaryBlue = Color(0xFF5DB7F6);
+  static const Color primaryBlueHover = Color(0xFF3B9FE8);
+  static const Color primaryBlueMuted = Color(0xFF2F80C7);
+  static const Color focusBlue = Color(0xFF60A5FA);
+
+  static const Color textPrimary = Color(0xFFE5E7EB);
+  static const Color textSecondary = Color(0xFF9CA3AF);
+  static const Color textMuted = Color(0xFF3F444A);
+  static const Color textBrand = Color(0xFF5DB7F6);
+  static const Color textDisabled = Color(0xFF5F6670);
+
+  static const Color success = Color(0xFF10B981);
+  static const Color warning = Color(0xFFF59E0B);
+  static const Color danger = Color(0xFFEF4444);
+  static const Color info = Color(0xFF0EA5E9);
 }
 
-class AsgardTheme {
-  static ThemeData light() {
-    return ThemeData(
-      brightness: Brightness.light,
-      scaffoldBackgroundColor: AsgardColors.backgroundLight,
-      colorScheme: const ColorScheme.light(
-        primary: AsgardColors.primaryLight,
-        surface: AsgardColors.surfaceLight,
-        error: AsgardColors.dangerLight,
-      ),
-      textTheme: GoogleFonts.interTextTheme(ThemeData.light().textTheme),
-    );
-  }
-
-  static ThemeData dark() {
-    return ThemeData(
-      brightness: Brightness.dark,
-      scaffoldBackgroundColor: AsgardColors.backgroundDark,
-      colorScheme: const ColorScheme.dark(
-        primary: AsgardColors.primaryDark,
-        surface: AsgardColors.surfaceDark,
-        error: AsgardColors.dangerDark,
-      ),
-      textTheme: GoogleFonts.interTextTheme(ThemeData.dark().textTheme),
-    );
-  }
-}
-
-// === App ===
+// ─── App ─────────────────────────────────────────────────────────────────────
 
 class LoginApp extends StatelessWidget {
   const LoginApp({Key? key}) : super(key: key);
@@ -69,51 +42,134 @@ class LoginApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Asgard',
+      title: 'Panago',
       debugShowCheckedModeBanner: false,
-      theme: AsgardTheme.light(),
-      darkTheme: AsgardTheme.dark(),
-      themeMode: ThemeMode.system,
+      themeMode: ThemeMode.dark,
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        scaffoldBackgroundColor: AsgardColors.background,
+        primaryColor: AsgardColors.primaryBlue,
+        colorScheme: const ColorScheme.dark(
+          primary: AsgardColors.primaryBlue,
+          surface: AsgardColors.surface,
+          background: AsgardColors.background,
+          error: AsgardColors.danger,
+        ),
+        appBarTheme: const AppBarTheme(
+          backgroundColor: AsgardColors.topBar,
+          elevation: 0,
+          centerTitle: false,
+        ),
+        textTheme: GoogleFonts.interTextTheme(ThemeData.dark().textTheme),
+      ),
       home: const LoginScreen(),
     );
   }
 }
 
-// === Asgard Components ===
+// ─── AsgardTopNav ─────────────────────────────────────────────────────────────
 
-class _AsgardBranding extends StatelessWidget {
-  const _AsgardBranding();
+class AsgardTopNav extends StatelessWidget {
+  const AsgardTopNav({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final primary = isDark ? AsgardColors.primaryDark : AsgardColors.primaryLight;
-    final textPrimary = isDark ? AsgardColors.textPrimaryDark : AsgardColors.textPrimaryLight;
-
-    return Row(
-      children: [
-        Container(
-          width: 32,
-          height: 32,
-          decoration: BoxDecoration(
-            color: primary,
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: const Icon(LucideIcons.zap, size: 18, color: Colors.white),
+    return Container(
+      height: 58,
+      color: AsgardColors.topBar,
+      decoration: const BoxDecoration(
+        border: Border(
+          bottom: BorderSide(color: Color(0xFF202426), width: 1),
         ),
-        const SizedBox(width: 10),
-        Text(
-          'Asgard',
-          style: GoogleFonts.inter(
-            fontSize: 20,
-            fontWeight: FontWeight.w700,
-            color: textPrimary,
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Row(
+        children: [
+          // PANAGO brand
+          Text(
+            'PANAGO',
+            style: GoogleFonts.inter(
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+              color: AsgardColors.textBrand,
+              letterSpacing: 1.2,
+            ),
           ),
-        ),
-      ],
+          const Spacer(),
+          // Search icon
+          const Icon(LucideIcons.search, color: Color(0xFF6B7280), size: 18),
+          const SizedBox(width: 14),
+          // Menu circle
+          Container(
+            width: 32,
+            height: 32,
+            decoration: BoxDecoration(
+              color: const Color(0xFF222427),
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: const Icon(LucideIcons.menu, color: Color(0xFF9CA3AF), size: 16),
+          ),
+          const SizedBox(width: 12),
+          // LOG IN outlined button
+          SizedBox(
+            height: 34,
+            child: OutlinedButton(
+              onPressed: null,
+              style: OutlinedButton.styleFrom(
+                primary: AsgardColors.primaryBlue,
+                side: const BorderSide(color: AsgardColors.border, width: 1),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(22),
+                ),
+                padding: const EdgeInsets.symmetric(horizontal: 14),
+              ),
+              child: Text(
+                'LOG IN',
+                style: GoogleFonts.inter(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w700,
+                  color: AsgardColors.primaryBlue,
+                  letterSpacing: 1.1,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(width: 8),
+          // SIGN UP solid button
+          SizedBox(
+            height: 34,
+            child: ElevatedButton(
+              onPressed: null,
+              style: ElevatedButton.styleFrom(
+                primary: AsgardColors.primaryBlue,
+                onPrimary: const Color(0xFF071014),
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(22),
+                ),
+                padding: const EdgeInsets.symmetric(horizontal: 14),
+              ),
+              child: Text(
+                'SIGN UP',
+                style: GoogleFonts.inter(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w700,
+                  color: const Color(0xFF071014),
+                  letterSpacing: 1.1,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(width: 14),
+          // Cart icon
+          const Icon(LucideIcons.shoppingCart, color: Color(0xFF6B7280), size: 18),
+        ],
+      ),
     );
   }
 }
+
+// ─── AsgardTextField ─────────────────────────────────────────────────────────
 
 class AsgardTextField extends StatelessWidget {
   final TextEditingController controller;
@@ -135,38 +191,39 @@ class AsgardTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final borderColor = isDark ? AsgardColors.borderDark : AsgardColors.borderLight;
-    final textColor = isDark ? AsgardColors.textPrimaryDark : AsgardColors.textPrimaryLight;
-    final labelColor = isDark ? AsgardColors.textSecondaryDark : AsgardColors.textSecondaryLight;
-    final fillColor = isDark ? AsgardColors.surfaceDark : AsgardColors.surfaceLight;
-    final focusColor = isDark ? AsgardColors.primaryDark : AsgardColors.primaryLight;
-
     return TextField(
       controller: controller,
       obscureText: obscureText,
       textInputAction: textInputAction,
       onSubmitted: onSubmitted != null ? (_) => onSubmitted!() : null,
-      style: GoogleFonts.inter(fontSize: 16, color: textColor),
+      style: GoogleFonts.inter(
+        fontSize: 15,
+        color: AsgardColors.textPrimary,
+      ),
       decoration: InputDecoration(
         labelText: label,
-        labelStyle: GoogleFonts.inter(fontSize: 14, color: labelColor),
-        prefixIcon: Icon(prefixIcon, size: 18, color: labelColor),
+        labelStyle: GoogleFonts.inter(
+          fontSize: 14,
+          color: const Color(0xFF6B7280),
+        ),
+        prefixIcon: Icon(prefixIcon, size: 18, color: const Color(0xFF6B7280)),
         filled: true,
-        fillColor: fillColor,
+        fillColor: AsgardColors.surface,
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: borderColor, width: 1.5),
+          borderSide: const BorderSide(color: AsgardColors.border, width: 1),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: focusColor, width: 2),
+          borderSide: const BorderSide(color: AsgardColors.focusBlue, width: 1.5),
         ),
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       ),
     );
   }
 }
+
+// ─── AsgardPrimaryButton ─────────────────────────────────────────────────────
 
 class AsgardPrimaryButton extends StatelessWidget {
   final String label;
@@ -180,33 +237,96 @@ class AsgardPrimaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final bgColor = isDark ? AsgardColors.primaryDark : AsgardColors.primaryLight;
-    final hoverColor = isDark ? AsgardColors.primaryHoverDark : AsgardColors.primaryHoverLight;
-
     return SizedBox(
       width: double.infinity,
+      height: 34,
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          primary: bgColor,
-          onPrimary: Colors.white,
-          padding: const EdgeInsets.symmetric(vertical: 16),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          primary: AsgardColors.primaryBlue,
+          onPrimary: const Color(0xFF071014),
           elevation: 0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(22),
+          ),
         ),
         child: Text(
           label,
           style: GoogleFonts.inter(
-            fontSize: 15,
-            fontWeight: FontWeight.w600,
-            color: Colors.white,
+            fontSize: 13,
+            fontWeight: FontWeight.w700,
+            color: const Color(0xFF071014),
+            letterSpacing: 1.1,
           ),
         ),
       ),
     );
   }
 }
+
+// ─── AsgardLoginButton (outlined) ────────────────────────────────────────────
+
+class AsgardLoginButton extends StatelessWidget {
+  final String label;
+  final IconData? icon;
+  final VoidCallback onPressed;
+
+  const AsgardLoginButton({
+    Key? key,
+    required this.label,
+    this.icon,
+    required this.onPressed,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final content = icon != null
+        ? Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(icon, size: 16, color: AsgardColors.primaryBlue),
+              const SizedBox(width: 8),
+              Text(
+                label,
+                style: GoogleFonts.inter(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w700,
+                  color: AsgardColors.primaryBlue,
+                  letterSpacing: 1.1,
+                ),
+              ),
+            ],
+          )
+        : Text(
+            label,
+            style: GoogleFonts.inter(
+              fontSize: 13,
+              fontWeight: FontWeight.w700,
+              color: AsgardColors.primaryBlue,
+              letterSpacing: 1.1,
+            ),
+          );
+
+    return SizedBox(
+      height: 34,
+      child: OutlinedButton(
+        onPressed: onPressed,
+        style: OutlinedButton.styleFrom(
+          primary: AsgardColors.primaryBlue,
+          backgroundColor: Colors.transparent,
+          side: const BorderSide(color: AsgardColors.border, width: 1),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(22),
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+        ),
+        child: content,
+      ),
+    );
+  }
+}
+
+// ─── AsgardErrorBadge ────────────────────────────────────────────────────────
 
 class AsgardErrorBadge extends StatelessWidget {
   final String message;
@@ -218,13 +338,13 @@ class AsgardErrorBadge extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       decoration: BoxDecoration(
-        color: AsgardColors.dangerLight.withOpacity(0.1),
+        color: AsgardColors.danger.withOpacity(0.1),
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: AsgardColors.dangerLight.withOpacity(0.3)),
+        border: Border.all(color: AsgardColors.danger.withOpacity(0.3)),
       ),
       child: Row(
         children: [
-          const Icon(LucideIcons.alertCircle, size: 16, color: AsgardColors.dangerLight),
+          const Icon(LucideIcons.alertCircle, size: 16, color: AsgardColors.danger),
           const SizedBox(width: 8),
           Expanded(
             child: Text(
@@ -232,7 +352,7 @@ class AsgardErrorBadge extends StatelessWidget {
               style: GoogleFonts.inter(
                 fontSize: 13,
                 fontWeight: FontWeight.w500,
-                color: AsgardColors.dangerLight,
+                color: AsgardColors.danger,
               ),
             ),
           ),
@@ -242,32 +362,7 @@ class AsgardErrorBadge extends StatelessWidget {
   }
 }
 
-BoxDecoration _cardDecoration(bool isDark) {
-  return BoxDecoration(
-    color: isDark ? AsgardColors.surfaceDark : AsgardColors.surfaceLight,
-    borderRadius: BorderRadius.circular(16),
-    border: Border.all(
-      color: isDark ? AsgardColors.borderDark : AsgardColors.borderLight,
-      width: 1,
-    ),
-    boxShadow: isDark
-        ? []
-        : [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.06),
-              blurRadius: 32,
-              offset: const Offset(0, 8),
-            ),
-            BoxShadow(
-              color: Colors.black.withOpacity(0.04),
-              blurRadius: 8,
-              offset: const Offset(0, 2),
-            ),
-          ],
-  );
-}
-
-// === Login Screen ===
+// ─── Login Screen ─────────────────────────────────────────────────────────────
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -288,12 +383,12 @@ class _LoginScreenState extends State<LoginScreen> {
     if (password == 'pa55w0rd') {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (_) => WelcomeScreen(username: username.isEmpty ? 'User' : username),
+          builder: (_) => HomeScreen(username: username.isEmpty ? 'User' : username),
         ),
       );
     } else {
       setState(() {
-        _errorMessage = 'Login failed. Invalid credentials.';
+        _errorMessage = 'Invalid credentials.';
       });
     }
   }
@@ -307,182 +402,121 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final bgColor = isDark ? AsgardColors.backgroundDark : AsgardColors.backgroundLight;
-    final textPrimary = isDark ? AsgardColors.textPrimaryDark : AsgardColors.textPrimaryLight;
-    final textSecondary = isDark ? AsgardColors.textSecondaryDark : AsgardColors.textSecondaryLight;
-
     return Scaffold(
-      backgroundColor: bgColor,
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(24, 20, 24, 0),
-              child: const _AsgardBranding(),
-            ),
-            Expanded(
-              child: Center(
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 400),
-                    child: Container(
-                      padding: const EdgeInsets.all(40),
-                      decoration: _cardDecoration(isDark),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Text(
-                            'Sign In',
-                            style: GoogleFonts.inter(
-                              fontSize: 24,
-                              fontWeight: FontWeight.w600,
-                              color: textPrimary,
-                            ),
+      backgroundColor: AsgardColors.background,
+      body: Column(
+        children: [
+          const AsgardTopNav(),
+          Expanded(
+            child: Center(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 420),
+                  child: Container(
+                    padding: const EdgeInsets.all(36),
+                    decoration: BoxDecoration(
+                      color: AsgardColors.surface,
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(color: AsgardColors.border, width: 1),
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Text(
+                          'Sign In',
+                          style: GoogleFonts.inter(
+                            fontSize: 24,
+                            fontWeight: FontWeight.w600,
+                            color: AsgardColors.textPrimary,
                           ),
-                          const SizedBox(height: 6),
-                          Text(
-                            'Access your Asgard workspace',
-                            style: GoogleFonts.inter(fontSize: 14, color: textSecondary),
+                        ),
+                        const SizedBox(height: 6),
+                        Text(
+                          'Access your workspace',
+                          style: GoogleFonts.inter(
+                            fontSize: 14,
+                            color: AsgardColors.textSecondary,
                           ),
-                          const SizedBox(height: 32),
-                          AsgardTextField(
-                            controller: _usernameController,
-                            label: 'Username',
-                            prefixIcon: LucideIcons.user,
-                            textInputAction: TextInputAction.next,
-                          ),
+                        ),
+                        const SizedBox(height: 28),
+                        AsgardTextField(
+                          controller: _usernameController,
+                          label: 'Username',
+                          prefixIcon: LucideIcons.user,
+                          textInputAction: TextInputAction.next,
+                        ),
+                        const SizedBox(height: 14),
+                        AsgardTextField(
+                          controller: _passwordController,
+                          label: 'Password',
+                          prefixIcon: LucideIcons.lock,
+                          obscureText: true,
+                          textInputAction: TextInputAction.done,
+                          onSubmitted: _login,
+                        ),
+                        if (_errorMessage != null) ...[
                           const SizedBox(height: 16),
-                          AsgardTextField(
-                            controller: _passwordController,
-                            label: 'Password',
-                            prefixIcon: LucideIcons.lock,
-                            obscureText: true,
-                            textInputAction: TextInputAction.done,
-                            onSubmitted: _login,
-                          ),
-                          if (_errorMessage != null) ...[
-                            const SizedBox(height: 16),
-                            AsgardErrorBadge(message: _errorMessage!),
-                          ],
-                          const SizedBox(height: 24),
-                          AsgardPrimaryButton(label: 'Sign In', onPressed: _login),
+                          AsgardErrorBadge(message: _errorMessage!),
                         ],
-                      ),
+                        const SizedBox(height: 20),
+                        AsgardPrimaryButton(label: 'SIGN IN', onPressed: _login),
+                      ],
                     ),
                   ),
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 }
 
-// === Welcome Screen ===
+// ─── Home Screen ──────────────────────────────────────────────────────────────
 
-class WelcomeScreen extends StatelessWidget {
+class HomeScreen extends StatelessWidget {
   final String username;
 
-  const WelcomeScreen({Key? key, required this.username}) : super(key: key);
+  const HomeScreen({Key? key, required this.username}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final bgColor = isDark ? AsgardColors.backgroundDark : AsgardColors.backgroundLight;
-    final textPrimary = isDark ? AsgardColors.textPrimaryDark : AsgardColors.textPrimaryLight;
-    final textSecondary = isDark ? AsgardColors.textSecondaryDark : AsgardColors.textSecondaryLight;
-    final borderColor = isDark ? AsgardColors.borderDark : AsgardColors.borderLight;
-    final success = isDark ? AsgardColors.successDark : AsgardColors.successLight;
-
     return Scaffold(
-      backgroundColor: bgColor,
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(24, 20, 24, 0),
-              child: const _AsgardBranding(),
-            ),
-            Expanded(
-              child: Center(
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 400),
-                    child: Container(
-                      padding: const EdgeInsets.all(40),
-                      decoration: _cardDecoration(isDark),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Container(
-                            width: 64,
-                            height: 64,
-                            decoration: BoxDecoration(
-                              color: success.withOpacity(0.12),
-                              shape: BoxShape.circle,
-                            ),
-                            child: Icon(LucideIcons.checkCircle, size: 32, color: success),
-                          ),
-                          const SizedBox(height: 24),
-                          Text(
-                            'Welcome, $username!',
-                            style: GoogleFonts.inter(
-                              fontSize: 24,
-                              fontWeight: FontWeight.w600,
-                              color: textPrimary,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            "You're now signed in to your Asgard workspace.",
-                            style: GoogleFonts.inter(fontSize: 14, color: textSecondary),
-                            textAlign: TextAlign.center,
-                          ),
-                          const SizedBox(height: 32),
-                          SizedBox(
-                            width: double.infinity,
-                            child: OutlinedButton.icon(
-                              onPressed: () {
-                                Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(builder: (_) => const LoginScreen()),
-                                );
-                              },
-                              icon: Icon(LucideIcons.logOut, size: 16),
-                              label: Text(
-                                'Sign out',
-                                style: GoogleFonts.inter(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                              style: OutlinedButton.styleFrom(
-                                padding: const EdgeInsets.symmetric(vertical: 14),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                side: BorderSide(color: borderColor, width: 1.5),
-                                primary: textPrimary,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+      backgroundColor: AsgardColors.background,
+      body: Column(
+        children: [
+          const AsgardTopNav(),
+          Expanded(
+            child: Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    'Home Page',
+                    style: GoogleFonts.inter(
+                      fontSize: 34,
+                      fontWeight: FontWeight.w400,
+                      color: AsgardColors.textMuted,
                     ),
                   ),
-                ),
+                  const SizedBox(height: 32),
+                  AsgardLoginButton(
+                    label: 'Sign out',
+                    icon: LucideIcons.logOut,
+                    onPressed: () {
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(builder: (_) => const LoginScreen()),
+                      );
+                    },
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
