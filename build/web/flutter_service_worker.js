@@ -6,12 +6,13 @@ const RESOURCES = {
   "version.json": "bd9f8da1ffb63daf60f1e0950e69e6a9",
 "index.html": "6fb06c2b97a3a741023d10f998ffb528",
 "/": "6fb06c2b97a3a741023d10f998ffb528",
-"main.dart.js": "c2010760fce61f92ca47f09cd217ac46",
+"main.dart.js": "f9576ca6b0582de6747b1c2f285bed92",
 "manifest.json": "49829e0307da8e6a7c673d1612fe75a7",
-"assets/AssetManifest.json": "2efbb41d7877d10aac9d091f58ccd7b9",
-"assets/NOTICES": "b48bd9be818bbadf257dada15252c7d8",
-"assets/FontManifest.json": "dc3d03800ccca4601324923c0b1d6d57",
+"assets/AssetManifest.json": "db36e87e15dd3d43c04911ea6d609785",
+"assets/NOTICES": "82cae772f1a1bab74b836b95d3451758",
+"assets/FontManifest.json": "1ee00d31df7d0b30bfafc1cf4922abf8",
 "assets/packages/cupertino_icons/assets/CupertinoIcons.ttf": "6d342eb68f170c97609e9da345464e5e",
+"assets/packages/lucide_icons/assets/lucide.ttf": "f9ba0b4172a0beabfecd5857b55dfe72",
 "assets/fonts/MaterialIcons-Regular.otf": "4e6447691c9509f7acdbf8a931a85ca1"
 };
 
